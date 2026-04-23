@@ -1,6 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../../../api/api";
 import { useNavigate } from "react-router-dom";
+
+type Category = {
+    id: number;
+    name: string;
+};
+
+type Brand = {
+    id: number;
+    name: string;
+    logoUrl: string;
+};
 
 export default function AddProduct() {
     const navigate = useNavigate();
@@ -8,11 +19,21 @@ export default function AddProduct() {
     const [name, setName] = useState("");
     const [price, setPrice] = useState<number>(0);
     const [stock, setStock] = useState<number>(0);
-    const [categoryId, setCategoryId] = useState<number>(1);
-    const [brandId, setBrandId] = useState<number>(1);
+
+    const [categoryId, setCategoryId] = useState<number | "">("");
+    const [brandId, setBrandId] = useState<number | "">("");
+
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [brands, setBrands] = useState<Brand[]>([]);
 
     const [image, setImage] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+
+    // 🚀 load category + brand
+    useEffect(() => {
+        api.get("/Category").then((res) => setCategories(res.data));
+        api.get("/Brand").then((res) => setBrands(res.data));
+    }, []);
 
     // 🚀 upload ảnh
     const uploadImage = async () => {
@@ -34,7 +55,7 @@ export default function AddProduct() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!name || price <= 0) {
+        if (!name || price <= 0 || !categoryId || !brandId) {
             alert("Nhập đầy đủ thông tin!");
             return;
         }
@@ -47,10 +68,8 @@ export default function AddProduct() {
         try {
             setLoading(true);
 
-            // 1. upload ảnh
             const imageUrl = await uploadImage();
 
-            // 2. tạo sản phẩm
             await api.post("/Product", {
                 name,
                 price,
@@ -61,7 +80,6 @@ export default function AddProduct() {
             });
 
             alert("Thêm sản phẩm thành công!");
-
             navigate("/admin/products");
         } catch (err) {
             console.error(err);
@@ -105,22 +123,32 @@ export default function AddProduct() {
                 />
 
                 {/* Category */}
-                <input
-                    type="number"
-                    placeholder="Category ID"
+                <select
                     className="w-full border p-2 rounded"
                     value={categoryId}
                     onChange={(e) => setCategoryId(Number(e.target.value))}
-                />
+                >
+                    <option value="">-- Chọn danh mục --</option>
+                    {categories.map((c) => (
+                        <option key={c.id} value={c.id}>
+                            {c.name}
+                        </option>
+                    ))}
+                </select>
 
                 {/* Brand */}
-                <input
-                    type="number"
-                    placeholder="Brand ID"
+                <select
                     className="w-full border p-2 rounded"
                     value={brandId}
                     onChange={(e) => setBrandId(Number(e.target.value))}
-                />
+                >
+                    <option value="">-- Chọn thương hiệu --</option>
+                    {brands.map((b) => (
+                        <option key={b.id} value={b.id}>
+                            {b.name}
+                        </option>
+                    ))}
+                </select>
 
                 {/* Upload ảnh */}
                 <div>
@@ -134,7 +162,6 @@ export default function AddProduct() {
                         }}
                     />
 
-                    {/* Preview */}
                     {image && (
                         <img
                             src={URL.createObjectURL(image)}
