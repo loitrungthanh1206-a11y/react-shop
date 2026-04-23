@@ -6,7 +6,7 @@ import ProductList from "../pages/admin/products/ProductList";
 
 export const AdminRoutes = (
   <Route path="/admin" element={<AdminLayout />}>
-    <Route index element={<Navigate to="dashboard" />} />
+    <Route index element={<Navigate to="/admin/dashboard" />} />
     <Route path="dashboard" element={<Dashboard />} />
     <Route path="products" element={<ProductList />} />
   </Route>
