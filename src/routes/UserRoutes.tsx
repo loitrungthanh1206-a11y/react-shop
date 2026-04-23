@@ -9,16 +9,14 @@ import Cart from "../pages/user/Cart";
 import Checkout from "../pages/user/Checkout";
 import Orders from "../pages/user/Orders";
 
-export default function UserRoutes() {
-    return (
-        <Route path="/" element={<UserLayout />}>
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="product/:id" element={<ProductDetail />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="orders" element={<Orders />} />
-        </Route>
-    );
-}
+export const UserRoutes = (
+    <Route path="/" element={<UserLayout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="product/:id" element={<ProductDetail />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="orders" element={<Orders />} />
+    </Route>
+);
