@@ -1,16 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminLayout from "./layouts/AdminLayout";
-import Dashboard from "./pages/admin/dashboard/DashboardList";
-import ProductList from "./pages/admin/products/ProductList";
+import { BrowserRouter, Routes } from "react-router-dom";
+import AdminRoutes from "./routes/AdminRoutes";
+import UserRoutes from "./routes/UserRoutes";
+
 function App() {
   return (
     <BrowserRouter>
-      <AdminLayout>
-        <Routes>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/products" element={<ProductList />} />
-        </Routes>
-      </AdminLayout>
+      <Routes>
+        <UserRoutes />
+        <AdminRoutes />
+      </Routes>
     </BrowserRouter>
   );
 }
