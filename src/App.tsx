@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
-import Dashboard from "./admin/dashboard/DashboardList";
-import ProductList from "./admin/products/ProductList";
+import Dashboard from "./pages/admin/dashboard/DashboardList";
+import ProductList from "./pages/admin/products/ProductList";
 function App() {
   return (
     <BrowserRouter>
