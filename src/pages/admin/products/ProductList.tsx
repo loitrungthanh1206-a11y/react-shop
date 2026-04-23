@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/api";
-
+import { Link } from "react-router-dom";
 interface Product {
     id: number;
     name: string;
@@ -33,9 +33,11 @@ export default function ProductList() {
         <div>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">Danh sách sản phẩm</h1>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                    + Thêm sản phẩm
-                </button>
+                <Link to="/admin/products/add">
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        + Thêm sản phẩm
+                    </button>
+                </Link>
             </div>
 
             <table className="w-full text-left border-collapse">
