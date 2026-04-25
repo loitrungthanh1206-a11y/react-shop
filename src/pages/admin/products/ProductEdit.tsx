@@ -13,6 +13,16 @@ type Brand = {
     logoUrl: string;
 };
 
+type Product = {
+    id: number;
+    name: string;
+    price: number;
+    stock: number;
+    imageUrl: string;
+    categoryId: number;
+    brandId: number;
+};
+
 export default function ProductEdit() {
     const navigate = useNavigate();
 
