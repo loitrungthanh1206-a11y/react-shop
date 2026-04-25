@@ -1,6 +1,5 @@
 import { Route } from "react-router-dom";
 import UserLayout from "../layouts/UserLayout";
-
 import Home from "../pages/user/Home";
 import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
@@ -9,7 +8,7 @@ import Cart from "../pages/user/Cart";
 import Checkout from "../pages/user/Checkout";
 import Orders from "../pages/user/Orders";
 
-export const UserRoutes = (
+export const UserRoutes = () => (
     <Route path="/" element={<UserLayout />}>
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
