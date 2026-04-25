@@ -12,7 +12,7 @@ export const AdminRoutes = (
     <Route path="dashboard" element={<Dashboard />} />
     <Route path="products" element={<ProductList />} />
     <Route path="products/add" element={<AddProduct />} />
-    <Route path="products/edit" element={<EditProduct />} />
+    <Route path="products/edit/:id" element={<EditProduct />} />
     <Route path="users" element={<UserAdmin />} />
   </Route>
 );
