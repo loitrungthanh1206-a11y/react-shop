@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/api";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 interface Product {
     id: number;
     name: string;
@@ -14,6 +14,7 @@ interface Product {
 export default function ProductList() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     useEffect(() => {
 
         api.get("/Product")
@@ -69,14 +70,15 @@ export default function ProductList() {
                             </td>
                             <td className="p-3 border">{product.stock}</td>
                             <td className="p-3 border">
-                                <Link to={`/admin/products/edit/${product.id}`}>
-                                    <button
-                                        onClick={() => console.log("CLICK ID:", product.id)}
-                                        className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500"
-                                    >
-                                        sửa
-                                    </button>
-                                </Link>
+                                <button
+                                    onClick={() => {
+                                        console.log("CLICK ID:", product.id);
+                                        navigate(`/admin/products/edit/${product.id}`);
+                                    }}
+                                    className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500"
+                                >
+                                    sửa
+                                </button>
                                 <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                     Xóa
                                 </button>
