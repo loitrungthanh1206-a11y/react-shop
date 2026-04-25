@@ -19,6 +19,7 @@ import ProductList from "./pages/admin/products/ProductList";
 import AddProduct from "./pages/admin/products/ProductAdd";
 import EditProduct from "./pages/admin/products/ProductEdit";
 import UserAdmin from "./pages/admin/users/UserList";
+import AddUser from "./pages/admin/users/AddUser";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="products/add" element={<AddProduct />} />
           <Route path="products/edit/:id" element={<EditProduct />} />
           <Route path="users" element={<UserAdmin />} />
+          <Route path="users/add" element={<AddUser />} />
         </Route>
       </Routes>
     </BrowserRouter>

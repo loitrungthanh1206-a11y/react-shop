@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/api";
-
+import { useNavigate } from "react-router-dom";
 type User = {
     id: number;
     username: string;
@@ -14,7 +14,7 @@ export default function UserAdmin() {
     const [search, setSearch] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
-
+const navigate = useNavigate();
     const [form, setForm] = useState({
         username: "",
         email: "",
@@ -36,17 +36,6 @@ export default function UserAdmin() {
         }
     };
 
-    // OPEN ADD
-    const openAdd = () => {
-        setEditingUser(null);
-        setForm({
-            username: "",
-            email: "",
-            password: "",
-            role: "Customer",
-        });
-        setIsOpen(true);
-    };
 
     // OPEN EDIT
     const openEdit = (user: User) => {
@@ -110,12 +99,12 @@ export default function UserAdmin() {
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">👤 Quản lý User</h1>
 
-                <button
-                    onClick={openAdd}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                >
-                    + Thêm User
-                </button>
+<button
+    onClick={() => navigate("/admin/users/add")}
+    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+>
+    + Thêm User
+</button>
             </div>
 
             {/* SEARCH */}
