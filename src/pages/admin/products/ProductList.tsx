@@ -69,9 +69,12 @@ export default function ProductList() {
                             </td>
                             <td className="p-3 border">{product.stock}</td>
                             <td className="p-3 border">
-                                <button className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500">
-                                    Sửa
-                                </button>
+
+                                <Link to="/admin/products/edit">
+                                    <button className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500">
+                                        sửa
+                                    </button>
+                                </Link>
                                 <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                     Xóa
                                 </button>
