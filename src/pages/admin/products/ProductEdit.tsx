@@ -144,7 +144,9 @@ export default function ProductEdit() {
                 <select
                     className="w-full border p-2 rounded"
                     value={categoryId}
-                    onChange={(e) => setCategoryId(Number(e.target.value))}
+                    onChange={(e) =>
+                        setCategoryId(e.target.value ? Number(e.target.value) : "")
+                    }
                 >
                     <option value="">-- Chọn danh mục --</option>
                     {categories.map((c) => (
