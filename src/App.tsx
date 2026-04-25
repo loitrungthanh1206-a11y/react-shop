@@ -1,13 +1,47 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AdminRoutes } from "./routes/AdminRoutes";
-import { UserRoutes } from "./routes/UserRoutes";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+// Layouts
+import UserLayout from "./layouts/UserLayout";
+import AdminLayout from "./layouts/AdminLayout";
+
+// User pages
+import Home from "./pages/user/Home";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register";
+import ProductDetail from "./pages/user/ProductDetail";
+import Cart from "./pages/user/Cart";
+import Checkout from "./pages/user/Checkout";
+import Orders from "./pages/user/Orders";
+
+// Admin pages
+import Dashboard from "./pages/admin/dashboard/DashboardList";
+import ProductList from "./pages/admin/products/ProductList";
+import AddProduct from "./pages/admin/products/ProductAdd";
+import EditProduct from "./pages/admin/products/ProductEdit";
+import UserAdmin from "./pages/admin/users/UserList";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <UserRoutes />  {/* gọi như component */}
-        <AdminRoutes /> {/* gọi như component */}
+        <Route path="/" element={<UserLayout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="orders" element={<Orders />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="/admin/dashboard" />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="products" element={<ProductList />} />
+          <Route path="products/add" element={<AddProduct />} />
+          <Route path="products/edit/:id" element={<EditProduct />} />
+          <Route path="users" element={<UserAdmin />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
