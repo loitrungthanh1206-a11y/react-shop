@@ -14,8 +14,8 @@ interface Product {
 export default function ProductList() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
+
         api.get("/Product")
             .then((res) => {
                 setProducts(res.data);
@@ -28,7 +28,7 @@ export default function ProductList() {
     }, []);
 
     if (loading) return <div>Đang tải...</div>;
-
+    console.log("Products:", products);
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
@@ -70,7 +70,10 @@ export default function ProductList() {
                             <td className="p-3 border">{product.stock}</td>
                             <td className="p-3 border">
                                 <Link to={`/admin/products/edit/${product.id}`}>
-                                    <button className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500">
+                                    <button
+                                        onClick={() => console.log("CLICK ID:", product.id)}
+                                        className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500"
+                                    >
                                         sửa
                                     </button>
                                 </Link>
