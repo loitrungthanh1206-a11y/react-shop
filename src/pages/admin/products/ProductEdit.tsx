@@ -79,39 +79,42 @@ export default function ProductEdit() {
     };
 
     // 🚀 update product
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-        if (!name || price <= 0 || !categoryId || !brandId) {
-            alert("Nhập đầy đủ thông tin!");
-            return;
-        }
-        console.log("Payload gửi lên:", JSON.stringify(payload));
+    if (!name || price <= 0 || !categoryId || !brandId) {
+        alert("Nhập đầy đủ thông tin!");
+        return;
+    }
 
-        try {
-            setLoading(true);
+    try {
+        setLoading(true);
 
-            const imageUrl = await uploadImage();
+        const imageUrl = await uploadImage();
 
-            await api.put(`/Product/${id}`, {
-                id: Number(id),
-                name,
-                price,
-                stock,
-                imageUrl,
-  categoryId: Number(categoryId), 
-    brandId: Number(brandId),
-            });
+        const payload = {
+            id: Number(id),
+            name,
+            price,
+            stock,
+            imageUrl,
+            categoryId: Number(categoryId),
+            brandId: Number(brandId),
+        };
 
-            alert("Cập nhật sản phẩm thành công!");
-            navigate("/admin/products");
-        } catch (err) {
-            console.error(err);
-            alert("Lỗi cập nhật sản phẩm!");
-        } finally {
-            setLoading(false);
-        }
-    };
+        console.log("Payload gửi lên:", JSON.stringify(payload)); // ✅ payload đã có
+
+        await api.put(`/Product/${id}`, payload);
+
+        alert("Cập nhật sản phẩm thành công!");
+        navigate("/admin/products");
+    } catch (err) {
+        console.error(err);
+        alert("Lỗi cập nhật sản phẩm!");
+    } finally {
+        setLoading(false);
+    }
+};
     if (loadingPage) return <div>Đang tải dữ liệu...</div>;
 
     return (
