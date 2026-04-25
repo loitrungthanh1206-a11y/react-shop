@@ -20,6 +20,7 @@ import AddProduct from "./pages/admin/products/ProductAdd";
 import EditProduct from "./pages/admin/products/ProductEdit";
 import UserAdmin from "./pages/admin/users/UserList";
 import AddUser from "./pages/admin/users/AddUser";
+import Categorylist from "./pages/admin/Category/CategoryList"
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="products/edit/:id" element={<EditProduct />} />
           <Route path="users" element={<UserAdmin />} />
           <Route path="users/add" element={<AddUser />} />
+          <Route path="categories" element={<Categorylist/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
