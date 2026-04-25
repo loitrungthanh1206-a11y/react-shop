@@ -72,7 +72,13 @@ export default function ProductList() {
                             <td className="p-3 border">
                                 <button
                                     onClick={() => {
-                                        console.log("CLICK ID:", product.id);
+                                        console.log("CLICK ID:", product.id, product);
+
+                                        if (!product.id) {
+                                            alert("ID bị undefined!");
+                                            return;
+                                        }
+
                                         navigate(`/admin/products/edit/${product.id}`);
                                     }}
                                     className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500"
