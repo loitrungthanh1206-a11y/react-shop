@@ -41,15 +41,20 @@ export default function ProductEdit() {
     const [oldImage, setOldImage] = useState("");
 
     const [loading, setLoading] = useState(false);
+    const [loadingPage, setLoadingPage] = useState(true);
 
     // 🚀 load category + brand + product detail
     useEffect(() => {
-        api.get("/Category").then((res) => setCategories(res.data));
-        api.get("/Brand").then((res) => setBrands(res.data));
+        Promise.all([
+            api.get("/Category"),
+            api.get("/Brand"),
+            api.get(`/Product/${id}`)
+        ])
+            .then(([catRes, brandRes, productRes]) => {
+                setCategories(catRes.data);
+                setBrands(brandRes.data);
 
-        api.get(`/Product/${id}`)
-            .then((res) => {
-                const p: Product = res.data;
+                const p = productRes.data;
 
                 setName(p.name);
                 setPrice(p.price);
@@ -57,8 +62,10 @@ export default function ProductEdit() {
                 setCategoryId(p.categoryId);
                 setBrandId(p.brandId);
                 setOldImage(p.imageUrl);
+
+                setLoadingPage(false); // 🔥 QUAN TRỌNG
             })
-            .catch((err) => console.log(err));
+            .catch(console.error);
     }, [id]);
 
     // 🚀 upload ảnh
@@ -109,6 +116,7 @@ export default function ProductEdit() {
             setLoading(false);
         }
     };
+    if (loadingPage) return <div>Đang tải dữ liệu...</div>;
 
     return (
         <div className="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow">
@@ -160,7 +168,9 @@ export default function ProductEdit() {
                 <select
                     className="w-full border p-2 rounded"
                     value={brandId}
-                    onChange={(e) => setBrandId(Number(e.target.value))}
+                    onChange={(e) =>
+                        setBrandId(e.target.value ? Number(e.target.value) : "")
+                    }
                 >
                     <option value="">-- Chọn thương hiệu --</option>
                     {brands.map((b) => (
