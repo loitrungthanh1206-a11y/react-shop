@@ -27,6 +27,18 @@ export default function ProductList() {
                 setLoading(false);
             });
     }, []);
+    const handleDelete = async (id: number) => {
+    if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
+
+    try {
+        await api.delete(`/Product/${id}`);
+        setProducts(products.filter((p) => p.id !== id)); // xóa khỏi list luôn
+        alert("Xóa sản phẩm thành công!");
+    } catch (err) {
+        console.error(err);
+        alert("Lỗi khi xóa sản phẩm!");
+    }
+};
 
     if (loading) return <div>Đang tải...</div>;
     console.log("Products:", products);
@@ -85,9 +97,12 @@ export default function ProductList() {
                                 >
                                     sửa
                                 </button>
-                                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                <button
+                                   onClick={() => handleDelete(product.id)}
+                                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                                >
                                     Xóa
-                                </button>
+                              </button>
                             </td>
                         </tr>
                     ))}
