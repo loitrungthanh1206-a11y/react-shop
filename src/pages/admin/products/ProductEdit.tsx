@@ -86,6 +86,7 @@ export default function ProductEdit() {
             alert("Nhập đầy đủ thông tin!");
             return;
         }
+        console.log("Payload gửi lên:", JSON.stringify(payload));
 
         try {
             setLoading(true);
@@ -93,12 +94,13 @@ export default function ProductEdit() {
             const imageUrl = await uploadImage();
 
             await api.put(`/Product/${id}`, {
+                id: Number(id),
                 name,
                 price,
                 stock,
                 imageUrl,
-                categoryId,
-                brandId,
+  categoryId: Number(categoryId), 
+    brandId: Number(brandId),
             });
 
             alert("Cập nhật sản phẩm thành công!");
