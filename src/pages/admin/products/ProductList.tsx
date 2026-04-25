@@ -69,7 +69,7 @@ export default function ProductList() {
                             </td>
                             <td className="p-3 border">{product.stock}</td>
                             <td className="p-3 border">
-                                <Link to="/admin/products/edit">
+                                <Link to={`/admin/products/edit/${product.id}`}>
                                     <button className="bg-yellow-400 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-500">
                                         sửa
                                     </button>
