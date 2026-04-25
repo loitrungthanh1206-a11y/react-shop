@@ -6,12 +6,12 @@ type User = {
     username: string;
     email: string;
     role: string;
+    password?: string;
 };
 
 export default function UserAdmin() {
     const [users, setUsers] = useState<User[]>([]);
     const [search, setSearch] = useState("");
-
     const [isOpen, setIsOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
 
@@ -19,28 +19,36 @@ export default function UserAdmin() {
         username: "",
         email: "",
         password: "",
-        role: "USER",
+        role: "Customer",
     });
 
-    // load users
+    // LOAD USERS
     useEffect(() => {
         fetchUsers();
     }, []);
 
-    const fetchUsers = () => {
-        api.get("/users")
-            .then((res) => setUsers(res.data))
-            .catch((err) => console.log(err));
+    const fetchUsers = async () => {
+        try {
+            const res = await api.get("/User"); // FIX ROUTE
+            setUsers(res.data);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    // open add modal
+    // OPEN ADD
     const openAdd = () => {
         setEditingUser(null);
-        setForm({ username: "", email: "", password: "", role: "USER" });
+        setForm({
+            username: "",
+            email: "",
+            password: "",
+            role: "Customer",
+        });
         setIsOpen(true);
     };
 
-    // open edit modal
+    // OPEN EDIT
     const openEdit = (user: User) => {
         setEditingUser(user);
         setForm({
@@ -52,13 +60,19 @@ export default function UserAdmin() {
         setIsOpen(true);
     };
 
-    // save (add or update)
+    // SAVE (ADD / UPDATE)
     const handleSave = async () => {
         try {
             if (editingUser) {
-                await api.put(`/users/${editingUser.id}`, form);
+                await api.put(`/User/${editingUser.id}`, {
+                    id: editingUser.id,
+                    username: form.username,
+                    email: form.email,
+                    role: form.role,
+                    password: form.password || ""
+                });
             } else {
-                await api.post("/users", form);
+                await api.post("/User", form);
             }
 
             setIsOpen(false);
@@ -69,14 +83,20 @@ export default function UserAdmin() {
         }
     };
 
-    // delete
+    // DELETE
     const handleDelete = async (id: number) => {
         if (!confirm("Xoá user này?")) return;
 
-        await api.delete(`/users/${id}`);
-        setUsers(users.filter((u) => u.id !== id));
+        try {
+            await api.delete(`/User/${id}`); // FIX ROUTE
+            setUsers(users.filter((u) => u.id !== id));
+        } catch (err) {
+            console.log(err);
+            alert("Lỗi xoá user!");
+        }
     };
 
+    // FILTER
     const filtered = users.filter(
         (u) =>
             u.username.toLowerCase().includes(search.toLowerCase()) ||
@@ -127,10 +147,11 @@ export default function UserAdmin() {
                                 <td className="p-3">{u.email}</td>
                                 <td className="p-3">
                                     <span
-                                        className={`px-2 py-1 text-white rounded text-sm ${u.role === "ADMIN"
+                                        className={`px-2 py-1 text-white rounded text-sm ${
+                                            u.role === "Admin"
                                                 ? "bg-red-500"
                                                 : "bg-green-500"
-                                            }`}
+                                        }`}
                                     >
                                         {u.role}
                                     </span>
@@ -203,8 +224,8 @@ export default function UserAdmin() {
                                 setForm({ ...form, role: e.target.value })
                             }
                         >
-                            <option value="USER">USER</option>
-                            <option value="ADMIN">ADMIN</option>
+                            <option value="Customer">Customer</option>
+                            <option value="Admin">Admin</option>
                         </select>
 
                         <div className="flex justify-end gap-2">
