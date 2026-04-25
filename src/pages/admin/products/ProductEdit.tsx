@@ -24,7 +24,6 @@ type Product = {
 };
 
 export default function ProductEdit() {
-    const { id } = useParams();
     const navigate = useNavigate();
 
     const [name, setName] = useState("");
@@ -42,16 +41,18 @@ export default function ProductEdit() {
 
     const [loading, setLoading] = useState(false);
     const [loadingPage, setLoadingPage] = useState(true);
-
+    const { id } = useParams<{ id: string }>();
+    console.log("ID:", id);
     // 🚀 load category + brand + product detail
     useEffect(() => {
-        if (!id) return;
+        if (!id || id === "undefined") return;
+
         const productId = Number(id);
         if (isNaN(productId)) return;
         Promise.all([
             api.get("/Category"),
             api.get("/Brand"),
-            api.get(`/Product/${id}`)
+            api.get(`/Product/${productId}`)
         ])
             .then(([catRes, brandRes, productRes]) => {
                 setCategories(catRes.data);
