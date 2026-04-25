@@ -45,6 +45,9 @@ export default function ProductEdit() {
 
     // 🚀 load category + brand + product detail
     useEffect(() => {
+        if (!id) return;
+        const productId = Number(id);
+        if (isNaN(productId)) return;
         Promise.all([
             api.get("/Category"),
             api.get("/Brand"),
