@@ -60,7 +60,7 @@ export default function ProductList() {
                                     src={product.imageUrl}
                                     alt={product.name}
                                     className="w-12 h-12 object-cover rounded"
-                                    onError={(e) => (e.currentTarget.src = "https://via.placeholder.com/50")}
+                                    onError={(e) => (e.currentTarget.src = "/no-image.png")}
                                 />
                             </td>
                             <td className="p-3 border">{product.name}</td>
