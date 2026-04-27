@@ -21,13 +21,20 @@ export default function Login() {
             // lưu token
             localStorage.setItem("token", res.data.token);
 
+            localStorage.setItem("user", JSON.stringify({
+                username: res.data.username,
+                role: res.data.role
+            }));
+
+
             alert("Đăng nhập thành công!");
 
             // chuyển về trang chủ
             navigate("/");
-        } catch (err) {
-            console.log(err);
-            alert("Sai email hoặc mật khẩu!");
+            window.location.reload();
+        } catch (err: any) {
+            console.log("STATUS:", err.response?.status);
+            console.log("DATA:", err.response?.data);
         } finally {
             setLoading(false);
         }
