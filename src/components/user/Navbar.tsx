@@ -1,6 +1,22 @@
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 export default function Navbar() {
+    const [user, setUser] = useState<any>(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+        navigate("/");
+    };
     return (
         <nav className="bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
@@ -27,17 +43,34 @@ export default function Navbar() {
 
                 {/* Auth */}
                 <div className="flex items-center gap-4">
-                    <Link to="/login">
-                        <button className="px-3 py-1 border rounded hover:bg-gray-100">
-                            Đăng nhập
-                        </button>
-                    </Link>
+                    {!user ? (
+                        <>
+                            <Link to="/login">
+                                <button className="px-3 py-1 border rounded">
+                                    Đăng nhập
+                                </button>
+                            </Link>
 
-                    <Link to="/register">
-                        <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            Đăng ký
-                        </button>
-                    </Link>
+                            <Link to="/register">
+                                <button className="px-3 py-1 bg-blue-500 text-white rounded">
+                                    Đăng ký
+                                </button>
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <span className="font-semibold">
+                                👤 {user.username}
+                            </span>
+
+                            <button
+                                onClick={handleLogout}
+                                className="px-3 py-1 bg-red-500 text-white rounded"
+                            >
+                                Đăng xuất
+                            </button>
+                        </>
+                    )}
                 </div>
 
             </div>
