@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 export default function Navbar() {
     const [user, setUser] = useState<any>(null);
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Navbar() {
         setUser(null);
         navigate("/");
     };
+
     return (
         <nav className="bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
@@ -31,11 +33,9 @@ export default function Navbar() {
                     <Link to="/" className="hover:text-blue-500">
                         Trang chủ
                     </Link>
-
                     <Link to="/cart" className="hover:text-blue-500">
                         Giỏ hàng
                     </Link>
-
                     <Link to="/orders" className="hover:text-blue-500">
                         Đơn hàng
                     </Link>
@@ -58,18 +58,25 @@ export default function Navbar() {
                             </Link>
                         </>
                     ) : (
-                        <>
-                            <span className="font-semibold">
+                        <div className="relative group">
+                            {/* Username */}
+                            <div className="cursor-pointer font-semibold">
                                 👤 {user.username}
-                            </span>
+                            </div>
 
-                            <button
-                                onClick={handleLogout}
-                                className="px-3 py-1 bg-red-500 text-white rounded"
-                            >
-                                Đăng xuất
-                            </button>
-                        </>
+                            {/* Dropdown */}
+                            <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-md 
+                                            opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                                            transition-all duration-200">
+
+                                <button
+                                    onClick={handleLogout}
+                                    className="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-500"
+                                >
+                                    Đăng xuất
+                                </button>
+                            </div>
+                        </div>
                     )}
                 </div>
 
