@@ -20,66 +20,80 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-white shadow-md">
+        <nav className="bg-white shadow-sm border-b">
             <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
 
-                {/* Logo */}
-                <Link to="/" className="text-xl font-bold text-blue-600">
-                    🍔 FoodShop
+                {/* LOGO */}
+                <Link to="/" className="text-xl font-bold text-indigo-600 flex items-center gap-2">
+                    💻 LaptopStore
                 </Link>
 
-                {/* Menu */}
-                <div className="flex items-center gap-6">
-                    <Link to="/" className="hover:text-blue-500">
+                {/* MENU */}
+                <div className="flex items-center gap-6 text-sm font-medium">
+                    <Link to="/" className="hover:text-indigo-600">
                         Trang chủ
                     </Link>
-                    <Link to="/cart" className="hover:text-blue-500">
-                        Giỏ hàng
+
+                    <Link to="/shop" className="hover:text-indigo-600">
+                        Sản phẩm
                     </Link>
-                    <Link to="/orders" className="hover:text-blue-500">
-                        Đơn hàng
+
+                    <Link to="/cart" className="hover:text-indigo-600">
+                        🛒 Giỏ hàng
+                    </Link>
+
+                    <Link to="/orders" className="hover:text-indigo-600">
+                        📦 Đơn hàng
                     </Link>
                 </div>
 
-                {/* Auth */}
+                {/* AUTH */}
                 <div className="flex items-center gap-4">
                     {!user ? (
                         <>
                             <Link to="/login">
-                                <button className="px-3 py-1 border rounded">
+                                <button className="px-3 py-1 border rounded hover:bg-gray-100">
                                     Đăng nhập
                                 </button>
                             </Link>
 
                             <Link to="/register">
-                                <button className="px-3 py-1 bg-blue-500 text-white rounded">
+                                <button className="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">
                                     Đăng ký
                                 </button>
                             </Link>
                         </>
                     ) : (
                         <div className="relative group">
-                            {/* Username */}
-                            <div className="cursor-pointer font-semibold">
+                            {/* USER */}
+                            <div className="cursor-pointer font-semibold flex items-center gap-2">
                                 👤 {user.username}
                             </div>
 
-                            {/* Dropdown */}
-                            <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-md 
+                            {/* DROPDOWN */}
+                            <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg 
                                             opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                                             transition-all duration-200">
+
                                 <Link
                                     to="/profile"
                                     className="block px-4 py-2 hover:bg-gray-100"
                                 >
-                                    Thông tin
+                                    👤 Thông tin
+                                </Link>
+
+                                <Link
+                                    to="/orders"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    📦 Đơn hàng
                                 </Link>
 
                                 <button
                                     onClick={handleLogout}
                                     className="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-500"
                                 >
-                                    Đăng xuất
+                                    🚪 Đăng xuất
                                 </button>
                             </div>
                         </div>
