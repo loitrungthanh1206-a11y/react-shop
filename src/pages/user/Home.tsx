@@ -19,7 +19,7 @@ export default function Home() {
     const [activeCategory, setActiveCategory] = useState("all");
 
     useEffect(() => {
-        api.get("/products/all")
+        api.get("/Product")
             .then((res) => setProducts(res.data))
             .catch((err) => console.log(err));
     }, []);
