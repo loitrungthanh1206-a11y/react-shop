@@ -311,18 +311,6 @@ export default function Home() {
                     </div>
                 )}
             </div>
-
-            {/* FOOTER STRIP */}
-            <div style={{
-                marginTop: "4rem",
-                background: "#0c0b18",
-                padding: "2rem",
-                textAlign: "center",
-            }}>
-                <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, margin: 0 }}>
-                    © 2025 Laptop Store Vietnam · Chất lượng · Uy tín · Tận tâm
-                </p>
-            </div>
         </div>
     );
 }

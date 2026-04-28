@@ -6,72 +6,104 @@ type Product = {
     id: number;
     name: string;
     price: number;
-    description: string;
     imageUrl: string;
+    stock: number;
+    categoryId: number;
+    brandId: number;
 };
 
 export default function ProductDetail() {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams();
     const [product, setProduct] = useState<Product | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        if (!id) return;
-
-        api.get(`/product-service/api/products/${id}`)
-            .then((res) => setProduct(res.data))
-            .catch((err) => console.log(err))
-            .finally(() => setLoading(false));
+        api.get(`/Product/${id}`)
+            .then((res) => {
+                console.log("DETAIL:", res.data);
+                setProduct(res.data);
+            })
+            .catch((err) => console.log(err));
     }, [id]);
 
-    if (loading) return <p className="text-center mt-10">Đang tải...</p>;
+    const handleAddToCart = () => {
+        if (!product) return;
 
-    if (!product) return <p className="text-center mt-10">Không tìm thấy sản phẩm</p>;
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+        const exist = cart.find((item: any) => item.id === product.id);
+
+        if (exist) {
+            exist.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("Đã thêm vào giỏ hàng!");
+    };
+
+    if (!product) {
+        return <div className="text-center mt-10">Đang tải...</div>;
+    }
 
     return (
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-6xl mx-auto px-4 py-10">
 
-            {/* Ảnh */}
-            <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="w-full h-96 object-cover rounded-xl"
-            />
+            <div className="grid md:grid-cols-2 gap-10 bg-white p-6 rounded-xl shadow">
 
-            {/* Thông tin */}
-            <div>
-                <h1 className="text-2xl font-bold mb-3">{product.name}</h1>
+                {/* IMAGE */}
+                <div>
+                    <img
+                        src={product.imageUrl}
+                        alt={product.name}
+                        className="w-full rounded-lg object-cover"
+                    />
+                </div>
 
-                <p className="text-red-500 text-xl mb-3">
-                    {product.price.toLocaleString("vi-VN")} đ
-                </p>
+                {/* INFO */}
+                <div className="flex flex-col justify-between">
 
-                <p className="text-gray-600 mb-4">
-                    {product.description}
-                </p>
+                    <div>
+                        <h1 className="text-2xl font-bold mb-3">
+                            {product.name}
+                        </h1>
 
-                {/* Button */}
-                <button
-                    className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600"
-                    onClick={() => {
-                        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+                        <p className="text-2xl text-red-500 font-semibold mb-4">
+                            {product.price.toLocaleString()}đ
+                        </p>
 
-                        const exist = cart.find((item: any) => item.id === product.id);
+                        <p className="text-gray-600 mb-2">
+                            Tình trạng:{" "}
+                            {product.stock > 0 ? (
+                                <span className="text-green-600">Còn hàng</span>
+                            ) : (
+                                <span className="text-red-500">Hết hàng</span>
+                            )}
+                        </p>
 
-                        if (exist) {
-                            alert("Sản phẩm đã có trong giỏ");
-                            return;
-                        }
+                        <p className="text-gray-500 text-sm">
+                            Mã sản phẩm: #{product.id}
+                        </p>
+                    </div>
 
-                        cart.push(product);
-                        localStorage.setItem("cart", JSON.stringify(cart));
+                    {/* ACTION */}
+                    <div className="mt-6 flex gap-4">
+                        <button
+                            onClick={handleAddToCart}
+                            className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+                        >
+                            🛒 Thêm vào giỏ
+                        </button>
 
-                        alert("Đã thêm vào giỏ hàng!");
-                    }}
-                >
-                    Thêm vào giỏ
-                </button>
+                        <button className="border px-6 py-2 rounded hover:bg-gray-100">
+                            ❤️ Yêu thích
+                        </button>
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
     );
 }
