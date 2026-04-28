@@ -12,6 +12,7 @@ import ProductDetail from "./pages/user/ProductDetail";
 import Cart from "./pages/user/Cart";
 import Checkout from "./pages/user/Checkout";
 import Orders from "./pages/user/Orders";
+import Profile from "./pages/user/Profile";
 
 // Admin pages
 import Dashboard from "./pages/admin/dashboard/DashboardList";
@@ -34,6 +35,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
@@ -44,7 +46,7 @@ function App() {
           <Route path="products/edit/:id" element={<EditProduct />} />
           <Route path="users" element={<UserAdmin />} />
           <Route path="users/add" element={<AddUser />} />
-          <Route path="categories" element={<Categorylist/>}/>
+          <Route path="categories" element={<Categorylist />} />
         </Route>
       </Routes>
     </BrowserRouter>
