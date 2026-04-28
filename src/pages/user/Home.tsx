@@ -7,11 +7,19 @@ type Product = {
     name: string;
     price: number;
     imageUrl: string;
-    brand?: string;
-    category?: string;
+
+    category?: {
+        id: number;
+        name: string;
+    };
+
+    brand?: {
+        id: number;
+        name: string;
+    };
 };
 
-const CATEGORIES = ["all", "Gaming", "Office", "Macbook", "Sinh viên", "Workstation"];
+const CATEGORIES = ["all", "Laptop Gaming", "Laptop Đồ họa / Kỹ thuật", "Ultrabook", "Laptop Mỏng nhẹ / Ultrabook"];
 
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -26,7 +34,11 @@ export default function Home() {
 
     const filtered = products.filter((p) => {
         const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
-        const matchCat = activeCategory === "all" || p.category === activeCategory;
+
+        const matchCat =
+            activeCategory === "all" ||
+            p.category?.name.toLowerCase() === activeCategory.toLowerCase();
+
         return matchSearch && matchCat;
     });
 
