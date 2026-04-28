@@ -1,6 +1,18 @@
-// src/api/api.js
 import axios from "axios";
 
-export default axios.create({
+const api = axios.create({
     baseURL: "https://phanvanthanh-2123110300-aps.onrender.com/api"
 });
+
+// ✅ Gắn token vào mỗi request
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+});
+
+export default api;
