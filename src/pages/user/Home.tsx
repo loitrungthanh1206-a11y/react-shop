@@ -28,16 +28,25 @@ export default function Home() {
 
     useEffect(() => {
         api.get("/Product")
-            .then((res) => setProducts(res.data))
+            .then((res) => {
+                console.log("DATA API:", res.data); // 👈 LOG Ở ĐÂY
+                setProducts(res.data);
+            })
             .catch((err) => console.log(err));
     }, []);
 
     const filtered = products.filter((p) => {
+        console.log("PRODUCT:", p); // 👈 log từng sản phẩm
+        console.log("CATEGORY NAME:", p.category?.name);
+        console.log("ACTIVE:", activeCategory);
+
         const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
 
         const matchCat =
             activeCategory === "all" ||
-            p.category?.name.toLowerCase() === activeCategory.toLowerCase();
+            p.category?.name?.trim().toLowerCase() === activeCategory.trim().toLowerCase();
+
+        console.log("MATCH:", matchCat); // 👈 xem true/false
 
         return matchSearch && matchCat;
     });
