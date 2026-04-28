@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 
 type Product = {
@@ -15,6 +15,7 @@ type Product = {
 export default function ProductDetail() {
     const { id } = useParams();
     const [product, setProduct] = useState<Product | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get(`/Product/${id}`)
@@ -26,6 +27,15 @@ export default function ProductDetail() {
     }, [id]);
 
     const handleAddToCart = () => {
+        const token = localStorage.getItem("token");
+
+        // ❌ CHƯA LOGIN → về login
+        if (!token) {
+            alert("Vui lòng đăng nhập trước!");
+            navigate("/login");
+            return;
+        }
+
         if (!product) return;
 
         const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -35,11 +45,21 @@ export default function ProductDetail() {
         if (exist) {
             exist.quantity += 1;
         } else {
-            cart.push({ ...product, quantity: 1 });
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+                quantity: 1
+            });
         }
 
         localStorage.setItem("cart", JSON.stringify(cart));
+
         alert("Đã thêm vào giỏ hàng!");
+
+        // ✅ chuyển sang giỏ hàng
+        navigate("/cart");
     };
 
     if (!product) {
