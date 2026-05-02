@@ -186,7 +186,10 @@ export default function Cart() {
                             </h2>
                         </div>
 
-                        <button className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all">
+                        <button
+                            onClick={() => navigate("/checkout")}
+                            className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all"
+                        >
                             Tiến hành thanh toán
                         </button>
                     </div>
