@@ -16,7 +16,7 @@ export default function DashboardList() {
                 // ✅ SỬA 1: Thêm biến "cartRes" để hứng kết quả thứ 5
                 const [p, u, o, c, cartRes] = await Promise.all([
                     api.get("/Product"),  // Chú ý viết hoa tên endpoint cho khớp với Backend C#
-                    api.get("/Users"),    // Nhớ kiểm tra lại tên API thực tế của bạn
+                    api.get("/User"),    // Nhớ kiểm tra lại tên API thực tế của bạn
                     api.get("/Order"),
                     api.get("/Category"),
                     api.get("/Cart/all"), // Dùng API lấy toàn bộ giỏ hàng của Admin vừa tạo lúc nãy
