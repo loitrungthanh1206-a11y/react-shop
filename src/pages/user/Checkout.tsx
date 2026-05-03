@@ -86,7 +86,7 @@ export default function Checkout() {
             });
 
             alert("🎉 Đặt hàng thành công!");
-            navigate("/products"); // Hoặc chuyển sang trang lịch sử đơn hàng
+            navigate("/Shop"); // Hoặc chuyển sang trang lịch sử đơn hàng
 
         } catch (error) {
             console.error("Lỗi khi đặt hàng:", error);
