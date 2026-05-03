@@ -24,6 +24,7 @@ import UserAdmin from "./pages/admin/users/UserList";
 import AddUser from "./pages/admin/users/AddUser";
 import Categorylist from "./pages/admin/Category/CategoryList"
 import OrderList from "./pages/admin/orders/OrderList";
+import CartList from "./pages/admin/Cart/CartList";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route path="users/add" element={<AddUser />} />
           <Route path="categories" element={<Categorylist />} />
           <Route path="orders" element={<OrderList />} />
+          <Route path="carts" element={<CartList />} />
         </Route>
       </Routes>
     </BrowserRouter>

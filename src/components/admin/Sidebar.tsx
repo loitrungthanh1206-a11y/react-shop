@@ -10,6 +10,7 @@ export default function Sidebar() {
                 <Link to="/admin/orders" className="hover:text-gray-300">Orders</Link>
                 <Link to="/admin/users" className="hover:text-gray-300">Users</Link>
                 <Link to="/admin/categories" className="hover:text-gray-300">Categories</Link>
+                <Link to="/admin/carts" className="hover:text-gray-300">Carts</Link>
             </nav>
         </div>
     );
