@@ -23,6 +23,7 @@ import EditProduct from "./pages/admin/products/ProductEdit";
 import UserAdmin from "./pages/admin/users/UserList";
 import AddUser from "./pages/admin/users/AddUser";
 import Categorylist from "./pages/admin/Category/CategoryList"
+import OrderList from "./pages/admin/orders/OrderList";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="users" element={<UserAdmin />} />
           <Route path="users/add" element={<AddUser />} />
           <Route path="categories" element={<Categorylist />} />
+          <Route path="orders" element={<OrderList />} />
         </Route>
       </Routes>
     </BrowserRouter>
