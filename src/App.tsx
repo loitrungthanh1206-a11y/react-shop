@@ -13,6 +13,7 @@ import Cart from "./pages/user/Cart";
 import Checkout from "./pages/user/Checkout";
 import Orders from "./pages/user/Orders";
 import Profile from "./pages/user/Profile";
+import Shop from "./pages/user/Shop";
 
 // Admin pages
 import Dashboard from "./pages/admin/dashboard/DashboardList";
@@ -36,6 +37,7 @@ function App() {
           <Route path="checkout" element={<Checkout />} />
           <Route path="orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="shop" element={<Shop />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>

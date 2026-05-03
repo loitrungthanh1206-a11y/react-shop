@@ -18,14 +18,13 @@ export default function Login() {
                 password,
             });
 
-            // 1. Lưu token
+
             localStorage.setItem("token", res.data.token);
 
-            // 2. LƯU USER_ID (Rất quan trọng cho Giỏ hàng)
-            // Phải đảm bảo Backend của bạn có trả về trường customerId hoặc id nhé!
+
             localStorage.setItem("userId", res.data.customerId || res.data.id);
 
-            // 3. Lưu thông tin user (để hiển thị tên lên Header)
+
             localStorage.setItem("user", JSON.stringify({
                 username: res.data.username,
                 role: res.data.role
@@ -33,11 +32,9 @@ export default function Login() {
 
             alert("Đăng nhập thành công!");
 
-            // chuyển về trang chủ
             navigate("/");
             window.location.reload();
         } catch (err: any) {
-            // ...
             console.log("STATUS:", err.response?.status);
             console.log("DATA:", err.response?.data);
         } finally {
